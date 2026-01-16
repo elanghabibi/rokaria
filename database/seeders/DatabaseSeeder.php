@@ -31,6 +31,14 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::create([
+            'username' => 'noname',
+            'name' => 'Unknown',
+            'email' => 'unknown@rokaria.com',
+            'password' => bcrypt('password123'),
+            'role' => 'user'
+        ]);
+
+        User::create([
             'username' => 'admin',
             'name' => 'Admin Rokaria',
             'email' => 'admin@rokaria.com',
