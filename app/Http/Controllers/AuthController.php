@@ -22,6 +22,9 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
+            if (Auth::user()->role === "admin") {
+                return redirect()->route('admin.dashboard')->with('success', 'Masuk berhasil!');
+            }
             return redirect()->route('home')->with('success', 'Masuk berhasil!');
         };
 
@@ -36,8 +39,8 @@ class AuthController extends Controller
 
     public function register (Request $request) {
         $validated = $request->validate([
-            'username' => 'required|min:6|max:50',
-            'name' => 'required|min:6|max:50',
+            'username' => 'required|max:50',
+            'name' => 'required|max:50',
             'email' => 'required|email|unique:users',
             'password' => 'required|confirmed'
         ]);

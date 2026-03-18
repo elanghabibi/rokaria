@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
-use App\Http\Controllers\AdminProjectController;
+use App\Http\Controllers\Admin\ProjectController as AdminProjectController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\HomeController;
 
 
@@ -15,6 +17,18 @@ Route::get('project/detail/{project}', [ProjectController::class, 'show'])->name
 
 Route::middleware('auth')->group(function () {
     Route::prefix('admin')->name('admin.')->middleware('role:admin')->group(function () {
+        Route::get("dashboard", [AdminDashboardController::class, "index"])->name("dashboard");
+        Route::prefix('user')->name('user.')->group(function() {
+            Route::get('/', [AdminUserController::class, 'index'])->name('index');
+            
+            Route::get('/create', [AdminUserController::class, 'create'])->name('create');
+            Route::post('/create', [AdminUserController::class, 'store'])->name('store');
+
+            Route::get('/{user}/edit', [AdminUserController::class, 'edit'])->name('edit');
+            Route::put('/{user}/edit', [AdminUserController::class, 'update'])->name('update');
+            
+            Route::post('/{user}/destroy', [AdminUserController::class, 'destroy'])->name('destroy');
+        });
         Route::prefix('project')->name('project.')->group(function() {
             Route::get('', [AdminProjectController::class, 'index'])->name('index');
 

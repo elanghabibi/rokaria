@@ -27,8 +27,8 @@
 					<p class="text-gray-600 text-sm">{{ $project->created_at->diffForHumans() }}</p>
 				</div>
 
-				<!-- Admin Role -->
-				@admin
+				
+				<!-- @admin
 				@if($project->status === 'pending')
 				<div class="w-full h-fit grid grid-cols-2 gap-4">
 					<form class="flex items-center justify-center" method="POST" action="{{ route('admin.project.approve', $project) }}">
@@ -43,7 +43,7 @@
 					</form>
 				</div>
 				@endif
-				@endadmin
+				@endadmin -->
 			</div>
 		</section>
 

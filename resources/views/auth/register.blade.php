@@ -7,7 +7,7 @@
 			<div class="space-y-4">
 				<div>
 					<div class="relative">
-						<input type="text" name="username" placeholder="Username" class="py-2 focus:outline-none focus:ring-2 focus:ring-gray-400 rounded-md px-10 bg-gray-100 invalid:focus:ring-red-500" value="{{ old('name') }}">
+						<input type="text" name="username" placeholder="Username" class="py-2 focus:outline-none focus:ring-2 focus:ring-gray-400 rounded-md px-10 bg-gray-100 invalid:focus:ring-red-500" value="{{ old('username') }}">
 						<span class="absolute top-1/2 -translate-y-1/2 left-3 flex items-center text-lg text-gray-600"><i class="bx bx-user"></i></span>
 					</div>
 					@error('username')

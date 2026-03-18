@@ -1,7 +1,7 @@
 class Disclosure {
 	constructor(el) {
 		this.el = el;
-		this.btn = this.el.querySelector('.disclosure-btn');
+		this.btns = this.el.querySelectorAll('.disclosure-btn');
 		this.panel = this.el.querySelector('.disclosure-panel');
 		this.isOpen = false;
 
@@ -12,8 +12,10 @@ class Disclosure {
 	}
 
 	init() {
-		if (!this.el || !this.btn || !this.panel) return;
-		this.btn.addEventListener('click', () => this.toggle());
+		if (!this.el || !this.btns || !this.panel) return;
+		this.btns.forEach((btn) => {
+			btn.addEventListener('click', () => this.toggle());
+		})
 	}
 
 	toggle() {
