@@ -16,11 +16,16 @@ class UserController extends Controller
     {
 
         $role = $request->role;
+        $search = $request->search;
 
         if ($role) {
-            $users = User::where("role", $role)->latest()->paginate(10);
+            $users = User::where("role", $role)->latest()->paginate(10)->withQueryString();
+        } elseif ($search) {
+            $users = User::when($search, function ($query, $search) {
+                $query->where('username', 'like', '%' . $search . '%');
+            })->latest()->paginate(10)->withQueryString();
         } else {
-            $users = User::latest()->paginate(10);
+            $users = User::latest()->paginate(10)->withQueryString();
         }
 
 
@@ -64,6 +69,10 @@ class UserController extends Controller
                 Rule::unique('users')->ignore($user->id),
             ],
         ]);
+
+        if ($user->id !== Auth::user()->id) {
+            $validated['role'] = $request->role;
+        }
 
         $user->update($validated);
 

@@ -15,7 +15,7 @@
             <ul class="flex items-center gap-4">
                 <li class="text-md text-gray-600"><a href="{{ route('project.index') }}">Jelajahi</a></li>
                 @admin
-                <li class="text-md text-gray-600"><a href="{{ route('admin.project.index') }}">Kelola Karya</a></li>
+                <li class="text-md text-gray-600"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                 @endadmin
             </ul>
         </nav>

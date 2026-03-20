@@ -101,13 +101,9 @@
 					<div class="relative break-inside-avoid mb-4 block w-full group overflow-hidden rounded-md">
 						<img src="{{ asset('/storage/' . $project->image) }}">
 						<div class="text-gray-50 p-4 flex flex-col justify-between absolute top-0 left-0 group-hover:opacity-100 opacity-0 transition-all duration-300 w-full h-full bg-gray-950/25" style="z-index: 5;">
-							<div class="flex w-fit h-fit">
-								<h3 class="text-lg truncate">{{ $project->title }}</h3>
-							</div>
+							<h3 class="text-lg truncate w-full">{{ $project->title }}</h3>
 
-							<div class="flex w-full justify-between h-fit items-center">
-								<p class="text-lg truncate">{{ $project->user->name }}</p>
-							</div>
+							<p class="text-lg truncate w-full">{{ $project->user->name }}</p>
 						</div>
 					</div>
 				</a>

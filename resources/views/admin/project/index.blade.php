@@ -1,54 +1,188 @@
-<x-app-layout title="Kelola Karya">
-	<section class="min-h-screen max-md:h-fit pt-18 max-w-5xl max-md:w-full mx-auto max-md:px-4">
-		<div class="py-8 space-y-2">
-			<h1 class="text-3xl font-semibold">Kelola Karya</h1>
-			<p class="text-gray-600">Lorem ipsum dolor sit amet, mukeklu kek jamet.</p>
+<x-admin-layout title="Kelola Karya">
+	<section class="flex flex-col gap-4">
+		<div class="flex justify-between items-center">
+			<h1 class="text-2xl font-semibold">Daftar Karya</h1>
+
+			<a href="{{ route('admin.project.verification') }}"
+				class="px-4 py-2 bg-sky-600 text-white rounded-lg text-sm flex items-center gap-2">
+				Verifikasi Karya
+			</a>
 		</div>
 
-		<div class="py-8 border-t-2 border-t-gray-200 h-fit w-full">
-			@forelse($projects as $project)
-			<div class="w-full p-4 max-md:p-2 h-20 max-md:h-14 flex items-center justify-between border-2 border-gray-200 bg-gray-100">
-				<div class="flex h-full items-center gap-4">
-					<div class="flex items-center justify-center h-full aspect-square rounded-md overflow-hidden"><img class="w-full h-full object-cover" src="{{ asset('/storage/' . $project->image) }}"></div>
-					<div class="flex flex-col w-100 max-md:w-40">
-						<h2 class="font-semibold max-md:text-sm truncate w-full">{{ $project->title }}</h2>
-						<p class="text-sm text-gray-600 max-md:text-[.7rem]">{{ $project->created_at->translatedFormat('d F Y') }}</p>
-					</div>
-				</div>
+		<div class="flex gap-2">
+			<a href="{{ request()->fullUrlWithoutQuery(['status']) }}"
+				class="text-sm px-3 py-1 border-2 rounded-full {{ !request('status') ? 'text-sky-600 border-sky-200 bg-sky-100' : 'text-gray-600 border-gray-200 hover:bg-sky-100' }} ">Semua</a>
+			<a href="{{ request()->fullUrlWithQuery(['status' => 'pending']) }}"
+				class="text-sm px-3 py-1 border-2 rounded-full {{ request('status') === 'pending' ? 'text-sky-600 border-sky-200 bg-sky-100' : 'text-gray-600 border-gray-200 hover:bg-sky-100' }}">Menunggu</a>
+			<a href="{{ request()->fullUrlWithQuery(['status' => 'approved']) }}"
+				class="text-sm px-3 py-1 border-2 rounded-full {{ request('status') === 'approved' ? 'text-sky-600 border-sky-200 bg-sky-100' : 'text-gray-600 border-gray-200 hover:bg-sky-100' }}">Disetujui</a>
+			<a href="{{ request()->fullUrlWithQuery(['status' => 'rejected']) }}"
+				class="text-sm px-3 py-1 border-2 rounded-full {{ request('status') === 'rejected' ? 'text-sky-600 border-sky-200 bg-sky-100' : 'text-gray-600 border-gray-200 hover:bg-sky-100' }}">Ditolak</a>
+		</div>
 
-
-				<div class="flex items-center gap-4 max-md:gap-2">
-					@if ($project->status === 'rejected')
-					<div class="bg-red-500/75 py-1 px-2 text-gray-50 rounded-md">
-						<p class="text-sm max-md:text-[.7rem]">Ditolak</p>
-					</div>
-
-					@elseif($project->status === 'approved')
-					<div class="bg-green-500/75 py-1 px-2 text-gray-50 rounded-md">
-						<p class="text-sm max-md:text-[.7rem]">Disetujui</p>
-					</div>
-
-					@else
-					<div class="bg-orange-500/75 py-1 px-2 text-gray-50 rounded-md">
-						<p class="text-sm max-md:text-[.7rem]">Menunggu</p>
-					</div>
-					@endif
-
-					<div class="disclosure relative">
-						<button class="disclosure-btn text-2xl cursor-pointer flex h-fit items-center"><i class="bx bx-dots-vertical-rounded"></i></button>
-						<div class="disclosure-panel absolute right-0 opacity-0 pointer-events-none p-4 bg-gray-50 shadow-md transition-all duration-300 space-y-2 rounded-md z-10">
-							<a href="{{ route('project.show', $project) }}" class="text-blue-500 max-md:text-sm flex items-center gap-2"><i class="bx bx-info-circle"></i> Detail</a>
-							<a href="{{ route('project.edit', $project) }}" class="text-blue-500 max-md:text-sm flex items-center gap-2"><i class="bx bx-pencil"></i> Edit</a>
-							<form method="POST" action="{{ route('project.destroy', $project) }}">@csrf @method('DELETE')<button type="submit" class="cursor-pointer text-red-500 max-md:text-sm flex items-center gap-2"><i class="bx bx-trash"></i> Hapus</button></form>
+		<div class="w-full bg-gray-50 rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+			<div class="px-6 py-3 flex justify-between items-center">
+				<div class="flex items-center gap-4">
+					<form action="{{ route('admin.project.index') }}" method="GET">
+						<div class="relative">
+							<i class="bx bx-search absolute top-1/2 -translate-y-1/2 left-2 text-gray-600"></i>
+							<input type="search" name="search"
+								class="focus:outline-sky-600 border-2 border-gray-200 bg-gray-100 rounded-lg py-2 pl-8 pr-2 text-sm"
+								placeholder="Cari karya..." value="{{ request('search') }}" />
 						</div>
+					</form>
+					<p class="text-gray-600">{{ $projects->count() }} karya ditampilkan</p>
+				</div>
+				<div class="disclosure">
+					<button
+					class="disclosure-btn cursor-pointer w-fit aspect-square p-2 bg-red-100 text-red-600 rounded flex items-center gap-1">
+					<i class="bx bx-trash"></i>
+					</button>
+
+					<div
+					class="disclosure-panel opacity-0 pointer-events-none absolute top-0 left-0 w-full h-screen flex justify-center items-center bg-gray-950/10"
+					style="z-index: 200">
+					<div
+						class="bg-gray-50 p-6 text-center rounded-xl shadow-lg shadow-gray-600/5 w-80 max-md:w-7/10 flex flex-col gap-6">
+						<i class="bx bx-alert-triangle text-red-500 text-5xl"></i>
+						<h2 class="text-2xl font-bold leading-6">
+						Hapus Data
+						</h2>
+						<p class="text-sm text-gray-600">
+						Apakah anda yakin ingin menghapus semua karya?
+						</p>
+
+						<div class="w-full grid grid-cols-2 gap-4">
+						<button
+							class="disclosure-btn w-full bg-gray-200 text-gray-950 font-bold py-2 text-sm rounded-lg cursor-pointer">
+							Batal
+						</button>
+						<form method="POST" action="{{ route('admin.project.destroy-all') }}">
+							@csrf
+							@method("delete")
+							<button type="submit"
+							class="w-full bg-red-500 text-gray-50 font-bold py-2 text-sm rounded-lg cursor-pointer">
+							Ya, Hapus
+							</button>
+						</form>
+						</div>
+					</div>
 					</div>
 				</div>
 			</div>
-			@empty
-				<div class="absolute left-0 text-center text-gray-600 mx-auto w-full h-30 flex items-center justify-center">
-					<p>Belum ada karya.</p>
+			<div class="overflow-x-auto">
+				<table class="w-full text-sm text-left">
+					<thead class="bg-gray-100 text-gray-600">
+						<tr class="border-b border-t border-gray-200">
+							<th class="px-6 py-3">ID Karya</th>
+							<th class="px-6 py-3">Username Pemilik</th>
+							<th class="px-6 py-3">Nama Pemilik</th>
+							<th class="px-6 py-3">Karya</th>
+							<th class="px-6 py-3">Judul</th>
+							<th class="px-6 py-3">Status</th>
+							<th class="px-6 py-3 text-center">Aksi</th>
+						</tr>
+					</thead>
+
+					<tbody class="">
+						@forelse($projects as $project)
+							<tr class="hover:bg-gray-100 border-b border-gray-200">
+								<td class="px-6 py-4">{{ $project->id }}</td>
+
+								<td class="px-6 py-4">
+									<span>{{ $project->user->username }}</span>
+								</td>
+
+								<td class="px-6 py-4">
+									<span>{{ $project->user->name }}</span>
+								</td>
+
+								<td class="px-6 py-4">
+									<div
+										class="flex items-center justify-center h-10 aspect-square rounded-md overflow-hidden">
+										<img class="w-full h-full object-cover"
+											src="{{ asset('/storage/' . $project->image) }}" />
+									</div>
+								</td>
+
+								<td class="px-6 py-4">
+									<div class="w-30 truncate">{{ $project->title }}</div>
+								</td>
+
+								<td class="px-6 py-4">
+									@if($project->status === 'pending')
+										<span class="text-xs bg-orange-100 py-1 px-2 text-orange-600 rounded-md">
+											Menunggu
+										</span>
+
+									@elseif($project->status === 'approved')
+										<span class="text-xs bg-green-100 py-1 px-2 text-green-600 rounded-md">
+											Disetujui
+										</span>
+
+									@else($project->status === 'rejected')
+										<span class="text-xs bg-red-100 py-1 px-2 text-red-600 rounded-md">
+											Ditolak
+										</span>
+									@endif
+								</td>
+
+								<td class="px-6 py-4">
+									<div class="flex justify-center gap-2">
+										<a href="{{ route('admin.project.show', $project) }}"
+											class="cursor-pointer w-fit aspect-square p-2 bg-orange-100 text-orange-600 rounded flex items-center gap-1">
+											<i class="bx bx-info-circle"></i>
+										</a>
+
+										<div class="disclosure">
+											<button
+												class="disclosure-btn cursor-pointer w-fit aspect-square p-2 bg-red-100 text-red-600 rounded flex items-center gap-1">
+												<i class="bx bx-trash"></i>
+											</button>
+
+											<div class="disclosure-panel opacity-0 pointer-events-none absolute top-0 left-0 w-full h-screen flex justify-center items-center bg-gray-950/10"
+												style="z-index: 200">
+												<div
+													class="bg-gray-50 p-6 text-center rounded-xl shadow-lg shadow-gray-600/5 w-80 max-md:w-7/10 flex flex-col gap-6">
+													<i class="bx bx-alert-triangle text-red-500 text-5xl"></i>
+													<h2 class="text-2xl font-bold leading-6">
+														Hapus Data
+													</h2>
+													<p class="text-sm text-gray-600">
+														Apakah anda yakin ingin menghapus?
+													</p>
+
+													<div class="w-full grid grid-cols-2 gap-4">
+														<button
+															class="disclosure-btn w-full bg-gray-200 text-gray-950 font-bold py-2 text-sm rounded-lg cursor-pointer">
+															Batal
+														</button>
+														<form action="{{ route("project.destroy", $project) }}" method="POST">
+															@csrf
+															@method('delete')
+															<button type="submit"
+																class="w-full bg-red-500 text-gray-50 font-bold py-2 text-sm rounded-lg cursor-pointer">
+																Ya, Hapus
+															</button>
+														</form>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</td>
+							</tr>
+						@empty
+							<tr class="hover:bg-gray-100 border-b border-gray-200">
+								<td colspan="6" class="px-6 py-4 text-center">Tidak ada data</td>
+							</tr>
+						@endforelse
+					</tbody>
+				</table>
+				<div class="px-6 py-3">
+					{{ $projects->links() }}
 				</div>
-			@endforelse
+			</div>
 		</div>
 	</section>
-</x-app-layout>
+</x-admin-layout>

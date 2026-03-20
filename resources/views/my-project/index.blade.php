@@ -5,9 +5,9 @@
 			<p class="text-gray-600">Lorem ipsum dolor sit amet, mukeklu kek jamet.</p>
 		</div>
 
-		<div class="py-8 border-t-2 border-t-gray-200 h-fit w-full">
+		<div class="py-8 border-t-2 border-t-gray-200 h-fit w-full space-y-4">
 			@forelse(Auth::user()->projects as $project)
-			<div class="w-full p-4 max-md:p-2 h-20 max-md:h-14 flex items-center justify-between border-2 border-gray-200 bg-gray-100">
+			<div class="rounded-lg w-full p-4 max-md:p-2 h-20 max-md:h-14 flex items-center justify-between border-2 border-gray-200 bg-gray-100">
 				<div class="flex h-full items-center gap-4">
 					<div class="flex items-center justify-center h-full aspect-square rounded-md overflow-hidden"><img class="w-full h-full object-cover" src="{{ asset('/storage/' . $project->image) }}"></div>
 					<div class="flex flex-col w-100 max-md:w-40">
@@ -19,18 +19,18 @@
 
 				<div class="flex items-center gap-4 max-md:gap-2">
 					@if ($project->status === 'rejected')
-					<div class="bg-red-500/75 py-1 px-2 text-gray-50 rounded-md">
-						<p class="text-sm max-md:text-[.7rem]">Ditolak</p>
+					<div class="bg-red-100 py-1 px-2 text-red-600 rounded-md">
+						<p class="text-xs max-md:text-[.7rem]">Ditolak</p>
 					</div>
 
 					@elseif($project->status === 'approved')
-					<div class="bg-green-500/75 py-1 px-2 text-gray-50 rounded-md">
-						<p class="text-sm max-md:text-[.7rem]">Disetujui</p>
+					<div class="bg-green-100 py-1 px-2 text-green-600 rounded-md">
+						<p class="text-xs max-md:text-[.7rem]">Disetujui</p>
 					</div>
 
 					@else
-					<div class="bg-orange-500/75 py-1 px-2 text-gray-50 rounded-md">
-						<p class="text-sm max-md:text-[.7rem]">Menunggu</p>
+					<div class="bg-orange-100 py-1 px-2 text-orange-600 rounded-md">
+						<p class="text-xs max-md:text-[.7rem]">Menunggu</p>
 					</div>
 					@endif
 

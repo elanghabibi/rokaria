@@ -49,8 +49,8 @@
 
                     <div class="flex flex-col w-full gap-1">
                         <label for="role">Role<span class="text-red-500">*</span></label>
-                        <select name="role" id="role"
-                            class="w-fit border-2 border-gray-200 bg-gray-50 py-2 p-4 rounded-lg focus:outline-sky-600">
+                        <select name="role" id="role" {{ $user->id === Auth::user()->id ? 'disabled' : '' }}
+                            class="w-fit border-2 border-gray-200 bg-gray-50 py-2 p-4 rounded-lg focus:outline-sky-600 disabled:bg-gray-200">
                             <option value="admin" {{ $user->role === 'admin' ? 'selected' : '' }}>Admin</option>
                             <option value="user" {{ $user->role === 'user' ? 'selected' : '' }}>User</option>
                         </select>

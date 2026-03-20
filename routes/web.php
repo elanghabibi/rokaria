@@ -31,9 +31,14 @@ Route::middleware('auth')->group(function () {
         });
         Route::prefix('project')->name('project.')->group(function() {
             Route::get('', [AdminProjectController::class, 'index'])->name('index');
+            Route::get('/verification', [AdminProjectController::class, 'verification'])->name('verification');
 
             Route::put('/{project}/approve', [AdminProjectController::class, 'approve'])->name('approve');
             Route::put('/{project}/reject', [AdminProjectController::class, 'reject'])->name('reject');
+            
+            Route::get('/detail/{project}', [AdminProjectController::class, 'show'])->name('show');
+            Route::delete('/destroy-all', [ProjectController::class, 'destroyAll'])->name('destroy-all');
+
         });
     });
 

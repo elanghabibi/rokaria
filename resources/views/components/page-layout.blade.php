@@ -10,7 +10,7 @@
 </head>
 <body class="bg-gray-100 w-full min-h-screen font-inter">
     <header class="h-fit w-full top-0 fixed left-0 bg-gray-50 px-12 py-4 items-center flex">
-        <span><a href="{{ route('profile.index') }}" class="h-fit flex w-fit items-center text-2xl"><i class="bx bx-chevron-left"></i></a></span>
+        <span><a href="{{ url()->previous() }}" class="h-fit flex w-fit items-center text-2xl"><i class="bx bx-chevron-left"></i></a></span>
         <h1 class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-lg">{{ $header }}</h1>
     </header>
 

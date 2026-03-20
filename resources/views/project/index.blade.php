@@ -18,20 +18,16 @@
 			<a href="{{ route('project.show', $project) }}">
 				<div class="relative break-inside-avoid mb-4 block w-full group overflow-hidden rounded-md">
 					<img src="{{ asset('/storage/' . $project->image) }}">
-					<div class="text-gray-50 p-4 flex flex-col justify-between absolute top-0 left-0 group-hover:opacity-100 opacity-0 transition-all duration-300 w-full h-full bg-gray-950/25" style="z-index: 5;">
-						<div class="flex w-fit h-fit">
-							<h3 class="text-lg truncate">{{ $project->title }}</h3>
-						</div>
+					<div class="text-gray-50 p-4 flex flex-col justify-between absolute top-0 left-0 group-hover:opacity-100 opacity-0 transition-all duration-300 w-full h-full bg-linear-to-b bg-gray-950/25" style="z-index: 5;">					
+						<h3 class="text-lg truncate w-full">{{ $project->title }}</h3>
 
-						<div class="flex w-full justify-between h-fit items-center">
-							<p class="text-lg truncate">{{ $project->user->name }}</p>
-						</div>
+						<p class="text-lg truncate w-full">{{ $project->user->name }}</p>
 					</div>
 				</div>
 			</a>
 			@empty
-			<div class="absolute left-0 text-center text-gray-600 mx-auto w-full h-30 flex items-center justify-center">
-				<p>Belum ada karya.</p>
+			<div class="absolute left-0 text-center text-gray-600 mx-auto w-full h-100 flex items-center justify-center">
+				<p>{{ request('search') ? 'Karya tidak ditemukan.' : 'Belum ada karya.' }}</p>
 			</div>
 			@endforelse
 		</div>

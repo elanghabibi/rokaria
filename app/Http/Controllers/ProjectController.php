@@ -19,7 +19,7 @@ class ProjectController extends Controller
 
         $projects = Project::when($search, function($query, $search) {
             $query->where('title', 'like', '%' . $search . '%');
-        })->where('status', 'approved')->paginate(10);
+        })->where('status', 'approved')->paginate(10)->withQueryString();
 
         return view('project.index', compact('projects'));
     }
@@ -130,5 +130,27 @@ class ProjectController extends Controller
         }
 
         return redirect()->route('my-project')->with('success', 'Karya berhasil dihapus!');
+    }
+
+    public function destroyAll()
+    {
+        //
+        $projects = Project::all();
+        if (Auth::user()->role !== 'admin') {
+            return abort(403);
+        };
+
+        foreach ($projects as $project) {
+            if (Storage::disk('public')->exists($project->image)) {
+                Storage::disk('public')->delete($project->image);
+            }
+
+            $project->delete();
+        }
+
+
+        if (Auth::user()->role === 'admin') {
+            return redirect()->route('admin.project.index')->with('success', 'Semua Karya berhasil dihapus!');    
+        }
     }
 }

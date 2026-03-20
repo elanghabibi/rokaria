@@ -1,4 +1,4 @@
-<x-admin-layout>
+<x-admin-layout title="Dashboard">
     <section class="space-y-4">
           <h1 class="text-2xl font-semibold">Dashboard</h1>
           <div
@@ -15,7 +15,7 @@
                 </p>
               </div>
             </a>
-            <a href="" class="block w-fit">
+            <a href="{{ route('admin.project.verification') }}" class="block w-fit">
               <div class="flex flex-col gap-1 items-center justify-center">
                 <i
                   class="w-fit p-4 text-2xl aspect-square bg-linear-to-br from-green-400 to-green-600 text-gray-50 rounded-full shadow-md shadow-gray-600/5 bx bx-check"

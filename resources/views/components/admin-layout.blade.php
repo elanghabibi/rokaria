@@ -49,7 +49,7 @@
             </li>
             <li class="w-full cursor-pointer">
               <a
-                href="../admin/karya/index.html"
+                href="{{ route('admin.project.index') }}"
                 class="flex items-center gap-2 text-md pl-4 rounded-lg w-full h-fit py-2 {{ request()->routeIs('admin.project.*') ? 'bg-gray-50 shadow-md shadow-gray-600/5' : 'text-gray-600 hover:bg-gray-200/50 transition-all duration-200' }}"
                 ><i class="bx bx-image-alt text-2xl"></i> Karya</a
               >
@@ -59,17 +59,48 @@
 
         <div class="flex flex-col w-full p-2 gap-4">
           <div class="flex w-full gap-2">
-            <div class="w-fit aspect-square flex justify-center items-center text-gray-50 font-bold bg-gray-950 rounded-full">A</div>
+            <div class="w-fit aspect-square flex justify-center items-center text-gray-50 font-bold bg-gray-950 rounded-full">{{Auth::user()->initial}}</div>
             <div class="flex flex-col">
               <h2 class="text-md">{{ Auth::user()->name }}</h2>
               <p class="text-sm text-gray-600">{{ Auth::user()->email }}</p>
             </div>
           </div>
 
-          <form method="POST" action="{{route('logout') }}">@csrf<button type="submit" class="flex cursor-pointer w-full items-center text-red-500 gap-2">
-            <i class="bx bx-door-open text-2xl"></i>
-            <span class="text-lg">Keluar</span>
-            </button></form>
+            <div class="disclosure">
+                <button type="submit" class="disclosure-btn flex cursor-pointer w-full items-center text-red-500 gap-2">
+                  <i class="bx bx-door-open text-2xl"></i>
+                  <span class="text-lg">Keluar</span>
+                </button>
+
+                <div
+                  class="disclosure-panel opacity-0 pointer-events-none absolute top-0 left-0 w-full h-screen flex justify-center items-center bg-gray-950/10"
+                  style="z-index: 200">
+                  <div
+                    class="bg-gray-50 p-6 text-center rounded-xl shadow-lg shadow-gray-600/5 w-80 max-md:w-7/10 flex flex-col gap-6">
+                    <i class="bx bx-alert-triangle text-red-500 text-5xl"></i>
+                    <h2 class="text-2xl font-bold leading-6">
+                      Keluar Akun
+                    </h2>
+                    <p class="text-sm text-gray-600">
+                      Apakah anda yakin ingin keluar?
+                    </p>
+
+                    <div class="w-full grid grid-cols-2 gap-4">
+                      <button
+                        class="disclosure-btn w-full bg-gray-200 text-gray-950 font-bold py-2 text-sm rounded-lg cursor-pointer">
+                        Batal
+                      </button>
+                      <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit"
+                          class="w-full bg-red-500 text-gray-50 font-bold py-2 text-sm rounded-lg cursor-pointer">
+                          Ya, Keluar
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
         </div>
       </aside>
 
