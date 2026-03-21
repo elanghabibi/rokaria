@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Project;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Validation\Rule;
 
 class ProfileController extends Controller
 {
@@ -49,7 +49,7 @@ class ProfileController extends Controller
         $user = User::where('username', $lowerUsername)->firstOrFail();
         $projects = $user->projects()->where('status', 'approved')->get();
 
-        if($user->username === 'admin') {
+        if($user->role === 'admin') {
             return abort(404);
         };
 
@@ -59,17 +59,40 @@ class ProfileController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit()
     {
         //
+        $user = Auth::user();
+
+        return view('profile.edit', compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
         //
+        $id_user = Auth::user()->id;
+        $user = User::findOrFail($id_user);
+
+        $validated = $request->validate([
+            'username' => [
+                'required',
+                Rule::unique('users')->ignore(Auth::user()->id),
+            ],
+            'name' => 'required|max:50',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users')->ignore(Auth::user()->id),
+            ],
+            'bio' => 'max:255'
+        ]);
+
+        $user->update($validated);
+
+        return redirect()->route('profile.index')->with('success', 'User berhasil di edit!');
     }
 
     /**

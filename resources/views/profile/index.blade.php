@@ -24,12 +24,23 @@
 					</div>
 				</div>
 
+				<div class="text-gray-950">
+					<p>{{ $user->bio }}</p>
+				</div>
+
 				@if(Auth::user()->id === $user->id )
-				<a href="{{ route('my-project') }}" class="flex w-fit h-fit">
-					<div class="bg-gray-200 py-1 px-4 rounded-md">
-						<p>Kelola karyaku</p>
-					</div>
-				</a>
+				<div class="flex gap-4 items-center">
+					<a href="{{ route('profile.edit') }}" class="flex w-fit h-fit">
+						<div class="bg-gray-200 py-1 px-4 rounded-md">
+							<p>Edit Profil</p>
+						</div>
+					</a>
+					<a href="{{ route('my-project') }}" class="flex w-fit h-fit">
+						<div class="bg-gray-200 py-1 px-4 rounded-md">
+							<p>Kelola karyaku</p>
+						</div>
+					</a>
+				</div>
 				@endif
 			</div>
 		</div>

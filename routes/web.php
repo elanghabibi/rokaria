@@ -27,6 +27,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/{user}/edit', [AdminUserController::class, 'edit'])->name('edit');
             Route::put('/{user}/edit', [AdminUserController::class, 'update'])->name('update');
             
+            Route::get('/{user}/detail', [AdminUserController::class, 'show'])->name('show');
+            
             Route::post('/{user}/destroy', [AdminUserController::class, 'destroy'])->name('destroy');
         });
         Route::prefix('project')->name('project.')->group(function() {
@@ -54,6 +56,10 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('profile')->name('profile.')->group(function () {
         Route::get('', [ProfileController::class, 'index'])->name('index');
+        
+        Route::get('/edit', [ProfileController::class, 'edit'])->name('edit');
+        Route::put('/edit', [ProfileController::class, 'update'])->name('update');
+        
         Route::get('/u/{username}', [ProfileController::class, 'show'])->name('show');
     });
 

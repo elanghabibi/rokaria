@@ -11,11 +11,11 @@
     </div>
 
     <div class="flex gap-2">
-      <a href="?"
+      <a href="{{ request()->fullUrlWithoutQuery(['role']) }}"
         class="text-sm px-3 py-1 border-2 rounded-full {{ !request('role') ? 'text-sky-600 border-sky-200 bg-sky-100' : 'text-gray-600 border-gray-200 hover:bg-sky-100' }}">Semua</a>
-      <a href="?role=user"
+      <a href="{{ request()->fullUrlWithQuery(['role' => 'user']) }}"
         class="text-sm px-3 py-1 border-2 rounded-full {{ request('role') === 'user' ? 'text-sky-600 border-sky-200 bg-sky-100' : 'text-gray-600 border-gray-200 hover:bg-sky-100' }}">User</a>
-      <a href="?role=admin"
+      <a href="{{ request()->fullUrlWithQuery(['role' => 'admin']) }}"
         class="text-sm px-3 py-1 border-2 rounded-full {{ request('role') === 'admin' ? 'text-sky-600 border-sky-200 bg-sky-100' : 'text-gray-600 border-gray-200 hover:bg-sky-100' }}">Admin</a>
     </div>
 
@@ -72,10 +72,15 @@
 
                 <td class="px-6 py-4">
                   <div class="flex justify-center gap-2">
+                    <a href="{{ route('admin.user.show', $user) }}"
+											class="cursor-pointer w-fit aspect-square p-2 bg-orange-100 text-orange-600 rounded flex items-center gap-1">
+											<i class="bx bx-info-circle"></i>
+										</a>
+
                     <a href="{{ route('admin.user.edit', $user) }}"
                     class="cursor-pointer w-fit aspect-square p-2 bg-blue-100 text-blue-600 rounded flex items-center gap-1">
-                    <i class="bx bx-edit"></i>
-                  </a>
+                      <i class="bx bx-edit"></i>
+                    </a>
                   
                   @if ($user->id !== Auth::user()->id)
                     <div class="disclosure">

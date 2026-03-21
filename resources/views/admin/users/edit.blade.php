@@ -34,8 +34,17 @@
                             <x-message-valid>{{ $message }}</x-message-valid>
                         @enderror
                     </div>
+                    <div class="flex flex-col w-full gap-1">
+                        <label for="email">Bio</label>
+                        <textarea name="bio" id="bio" maxlength="255"
+                            class="border-2 border-gray-200 bg-gray-50 py-1 pl-2 rounded-lg focus:outline-sky-600 h-36 resize-none"
+                            >{{ $user->bio }}</textarea>
+                        @error('bio')
+                            <x-message-valid>{{ $message }}</x-message-valid>
+                        @enderror
+                    </div>
                     <div class="flex flex-col w-full gap-1 show-password">
-                        <label for="password">Password<span class="text-red-500">*</span></label>
+                        <label for="password">Password</label>
                         <div class="relative w-full">
                             <input type="password" name="password" id="password"
                                 class="password-input w-full border-2 border-gray-200 bg-gray-50 py-1 pl-2 rounded-lg focus:outline-sky-600" />

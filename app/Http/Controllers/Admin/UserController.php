@@ -61,13 +61,17 @@ class UserController extends Controller
     {
 
         $validated = $request->validate([
-            'username' => 'required|max:50',
+            'username' => [
+                'required',
+                Rule::unique('users')->ignore($user->id),
+            ],
             'name' => 'required|max:50',
             'email' => [
                 'required',
                 'email',
                 Rule::unique('users')->ignore($user->id),
             ],
+            'bio' => 'max:255'
         ]);
 
         if ($user->id !== Auth::user()->id) {
@@ -77,6 +81,10 @@ class UserController extends Controller
         $user->update($validated);
 
         return redirect()->route('admin.user.index')->with('success', 'User berhasil di edit!');
+    }
+
+    public function show(User $user) {
+        return view('admin.users.show', compact('user'));
     }
 
     public function destroy(User $user)

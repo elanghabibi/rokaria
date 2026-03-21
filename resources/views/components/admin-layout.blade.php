@@ -16,7 +16,7 @@
       style="z-index: 100"
     >
       <div class="flex gap-8 items-center h-fit w-fit">
-        <a href="#" class="flex w-fit h-fit text-2xl">
+        <a href="{{ route("home") }}" class="flex w-fit h-fit text-2xl">
           <p>Rokaria</p>
         </a>
       </div>
@@ -66,41 +66,41 @@
             </div>
           </div>
 
-            <div class="disclosure">
-                <button type="submit" class="disclosure-btn flex cursor-pointer w-full items-center text-red-500 gap-2">
-                  <i class="bx bx-door-open text-2xl"></i>
-                  <span class="text-lg">Keluar</span>
-                </button>
+          <div class="disclosure">
+            <button class="disclosure-btn flex cursor-pointer w-full items-center text-red-500 gap-2">
+              <i class="bx bx-door-open text-2xl"></i>
+              <span class="text-lg">Keluar</span>
+            </button>
 
-                <div
-                  class="disclosure-panel opacity-0 pointer-events-none absolute top-0 left-0 w-full h-screen flex justify-center items-center bg-gray-950/10"
-                  style="z-index: 200">
-                  <div
-                    class="bg-gray-50 p-6 text-center rounded-xl shadow-lg shadow-gray-600/5 w-80 max-md:w-7/10 flex flex-col gap-6">
-                    <i class="bx bx-alert-triangle text-red-500 text-5xl"></i>
-                    <h2 class="text-2xl font-bold leading-6">
-                      Keluar Akun
-                    </h2>
-                    <p class="text-sm text-gray-600">
-                      Apakah anda yakin ingin keluar?
-                    </p>
+            <div
+              class="disclosure-panel opacity-0 pointer-events-none absolute top-0 left-0 w-full h-screen flex justify-center items-center bg-gray-950/10"
+              style="z-index: 200">
+              <div
+                class="bg-gray-50 p-6 text-center rounded-xl shadow-lg shadow-gray-600/5 w-80 max-md:w-7/10 flex flex-col gap-6">
+                <i class="bx bx-alert-triangle text-red-500 text-5xl"></i>
+                <h2 class="text-2xl font-bold leading-6">
+                  Keluar Akun
+                </h2>
+                <p class="text-sm text-gray-600">
+                  Apakah anda yakin ingin keluar?
+                </p>
 
-                    <div class="w-full grid grid-cols-2 gap-4">
-                      <button
-                        class="disclosure-btn w-full bg-gray-200 text-gray-950 font-bold py-2 text-sm rounded-lg cursor-pointer">
-                        Batal
-                      </button>
-                      <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit"
-                          class="w-full bg-red-500 text-gray-50 font-bold py-2 text-sm rounded-lg cursor-pointer">
-                          Ya, Keluar
-                        </button>
-                      </form>
-                    </div>
-                  </div>
+                <div class="w-full grid grid-cols-2 gap-4">
+                  <button
+                    class="disclosure-btn w-full bg-gray-200 text-gray-950 font-bold py-2 text-sm rounded-lg cursor-pointer">
+                    Batal
+                  </button>
+                  <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit"
+                      class="w-full bg-red-500 text-gray-50 font-bold py-2 text-sm rounded-lg cursor-pointer">
+                      Ya, Keluar
+                    </button>
+                  </form>
                 </div>
               </div>
+            </div>
+          </div>
         </div>
       </aside>
 
