@@ -77,7 +77,8 @@ class UserController extends Controller
         if ($user->id !== Auth::user()->id) {
             $validated['role'] = $request->role;
         }
-
+        
+        $validated['password'] = $request->password;
         $user->update($validated);
 
         return redirect()->route('admin.user.index')->with('success', 'User berhasil di edit!');

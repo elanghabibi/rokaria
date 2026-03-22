@@ -10,13 +10,13 @@
 		</div>
 
 		<div class="flex gap-2">
-			<a href="{{ request()->fullUrlWithoutQuery(['status']) }}"
+			<a href="{{ route('admin.project.index') }}"
 				class="text-sm px-3 py-1 border-2 rounded-full {{ !request('status') ? 'text-sky-600 border-sky-200 bg-sky-100' : 'text-gray-600 border-gray-200 hover:bg-sky-100' }} ">Semua</a>
-			<a href="{{ request()->fullUrlWithQuery(['status' => 'pending']) }}"
+			<a href="{{ route('admin.project.index', ['status' => 'pending']) }}"
 				class="text-sm px-3 py-1 border-2 rounded-full {{ request('status') === 'pending' ? 'text-sky-600 border-sky-200 bg-sky-100' : 'text-gray-600 border-gray-200 hover:bg-sky-100' }}">Menunggu</a>
-			<a href="{{ request()->fullUrlWithQuery(['status' => 'approved']) }}"
+			<a href="{{ route('admin.project.index', ['status' => 'approved']) }}"
 				class="text-sm px-3 py-1 border-2 rounded-full {{ request('status') === 'approved' ? 'text-sky-600 border-sky-200 bg-sky-100' : 'text-gray-600 border-gray-200 hover:bg-sky-100' }}">Disetujui</a>
-			<a href="{{ request()->fullUrlWithQuery(['status' => 'rejected']) }}"
+			<a href="{{ route('admin.project.index', ['status' => 'rejected']) }}"
 				class="text-sm px-3 py-1 border-2 rounded-full {{ request('status') === 'rejected' ? 'text-sky-600 border-sky-200 bg-sky-100' : 'text-gray-600 border-gray-200 hover:bg-sky-100' }}">Ditolak</a>
 		</div>
 
@@ -46,7 +46,7 @@
 						class="bg-gray-50 p-6 text-center rounded-xl shadow-lg shadow-gray-600/5 w-80 max-md:w-7/10 flex flex-col gap-6">
 						<i class="bx bx-alert-triangle text-red-500 text-5xl"></i>
 						<h2 class="text-2xl font-bold leading-6">
-						Hapus Data
+						Hapus Semua Karya
 						</h2>
 						<p class="text-sm text-gray-600">
 						Apakah anda yakin ingin menghapus semua karya?

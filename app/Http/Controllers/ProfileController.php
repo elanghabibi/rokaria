@@ -92,7 +92,7 @@ class ProfileController extends Controller
 
         $user->update($validated);
 
-        return redirect()->route('profile.index')->with('success', 'User berhasil di edit!');
+        return redirect()->route('profile.index')->with('success', 'Profil berhasil di edit!');
     }
 
     /**

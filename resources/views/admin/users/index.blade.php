@@ -11,33 +11,36 @@
     </div>
 
     <div class="flex gap-2">
-      <a href="{{ request()->fullUrlWithoutQuery(['role']) }}"
+      <a href="{{ route('admin.user.index') }}"
         class="text-sm px-3 py-1 border-2 rounded-full {{ !request('role') ? 'text-sky-600 border-sky-200 bg-sky-100' : 'text-gray-600 border-gray-200 hover:bg-sky-100' }}">Semua</a>
-      <a href="{{ request()->fullUrlWithQuery(['role' => 'user']) }}"
+      <a href="{{ route('admin.user.index', ['role' => 'user']) }}"
         class="text-sm px-3 py-1 border-2 rounded-full {{ request('role') === 'user' ? 'text-sky-600 border-sky-200 bg-sky-100' : 'text-gray-600 border-gray-200 hover:bg-sky-100' }}">User</a>
-      <a href="{{ request()->fullUrlWithQuery(['role' => 'admin']) }}"
+      <a href="{{ route('admin.user.index', ['role' => 'admin']) }}"
         class="text-sm px-3 py-1 border-2 rounded-full {{ request('role') === 'admin' ? 'text-sky-600 border-sky-200 bg-sky-100' : 'text-gray-600 border-gray-200 hover:bg-sky-100' }}">Admin</a>
     </div>
 
     <div class="w-full bg-gray-50 rounded-lg shadow-sm border border-gray-200 overflow-hidden">
       <div class="px-6 py-3">
-        <form action="{{ route('admin.user.index') }}" method="GET">
-          <div class="relative">
-            <i class="bx bx-search absolute top-1/2 -translate-y-1/2 left-2 text-gray-600"></i>
-            <input type="search" name="search"
-              class="focus:outline-sky-600 border-2 border-gray-200 bg-gray-100 rounded-lg py-2 pl-8 pr-2 text-sm"
-              placeholder="Cari username..." value="{{ request('search') }}" />
-          </div>
-        </form>
+        <div class="flex items-center gap-4">
+          <form action="{{ route('admin.user.index') }}" method="GET">
+            <div class="relative">
+              <i class="bx bx-search absolute top-1/2 -translate-y-1/2 left-2 text-gray-600"></i>
+              <input type="search" name="search"
+                class="focus:outline-sky-600 border-2 border-gray-200 bg-gray-100 rounded-lg py-2 pl-8 pr-2 text-sm"
+                placeholder="Cari username..." value="{{ request('search') }}" />
+            </div>
+          </form>
+          <p class="text-gray-600">{{ $users->count() }} karya ditampilkan</p>
+        </div>
       </div>
       <div class="overflow-x-auto">
         <table class="w-full text-sm text-left">
           <thead class="bg-gray-100 text-gray-600">
             <tr class="border-b border-t border-gray-200">
               <th class="px-6 py-3">ID User</th>
-              <th class="px-6 py-3">Nama</th>
               <th class="px-6 py-3">Username</th>
               <th class="px-6 py-3">Email</th>
+              <th class="px-6 py-3">Total Karya</th>
               <th class="px-6 py-3">Role</th>
               <th class="px-6 py-3 text-center">Aksi</th>
             </tr>
@@ -49,14 +52,12 @@
                 <td class="px-6 py-4">{{ $user->id }}</td>
 
                 <td class="px-6 py-4">
-                  <span class="truncate">{{ $user->name }}</span>
-                </td>
-
-                <td class="px-6 py-4">
                   <span>{{ $user->username }}</span>
                 </td>
 
                 <td class="px-6 py-4">{{ $user->email }}</td>
+
+                <td class="px-6 py-4">{{ $user->projects->count() }}</td>
 
                 <td class="px-6 py-4">
                   @if ($user->role === "admin")

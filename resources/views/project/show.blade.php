@@ -20,6 +20,23 @@
 						</div>
 					</div>
 					<p>{{ $project->description }}</p>
+					@if (Auth::user()->id === $project->user->id)
+						@if($project->status === 'pending')
+							<span class="text-xs bg-orange-100 py-1 px-2 text-orange-600 rounded-md">
+								Menunggu
+							</span>
+
+						@elseif($project->status === 'approved')
+							<span class="text-xs bg-green-100 py-1 px-2 text-green-600 rounded-md">
+								Disetujui
+							</span>
+
+						@else($project->status === 'rejected')
+							<span class="text-xs bg-red-100 py-1 px-2 text-red-600 rounded-md">
+								Ditolak
+							</span>
+						@endif
+					@endif
 				</div>
 
 				<div class="py-4 border-t border-t-gray-200 flex w-full items-center justify-between">
